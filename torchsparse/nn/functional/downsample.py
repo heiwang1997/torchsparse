@@ -34,10 +34,15 @@ def spdownsample(
     else:
         if coords.device.type == 'cuda':
             coords = coords[:, [3, 0, 1, 2]]
+            c_max = coords.max(0).values
+            c_min = coords.min(0).values
+            for d in range(3):
+                c_max[d + 1] += kernel_size[d]
+                c_min[d + 1] -= kernel_size[d]
             out_coords = torchsparse.backend.downsample_cuda(
                 coords,
-                coords.max(0).values,
-                coords.min(0).values, kernel_size, stride,
+                c_max, c_min, 
+                kernel_size, stride,
                 tensor_stride)[:, [1, 2, 3, 0]]
             return out_coords
         else:

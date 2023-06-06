@@ -156,14 +156,14 @@ def conv3d(
     dilation = make_ntuple(dilation, ndim=3)
 
     conv_mode_num = 0
-    global buffer
-    if torchsparse.backends.benchmark:  # type: ignore
-        conv_mode_num = 1 if (epsilon == 0.0 and mm_thresh == 0) else 2
-        if buffer.shape[0] == 0 or buffer.dtype != input.F.dtype:
-            buffer = torch.zeros(4000000 * 64,
-                                 dtype=input.F.dtype,
-                                 device=input.F.device,
-                                 requires_grad=False)
+    # global buffer
+    # if torchsparse.backends.benchmark:  # type: ignore
+    #     conv_mode_num = 1 if (epsilon == 0.0 and mm_thresh == 0) else 2
+    #     if buffer.shape[0] == 0 or buffer.dtype != input.F.dtype:
+    #         buffer = torch.zeros(4000000 * 64,
+    #                              dtype=input.F.dtype,
+    #                              device=input.F.device,
+    #                              requires_grad=False)
 
     if kernel_size == (1, 1, 1) and stride == (1, 1, 1) and dilation == (1, 1,
                                                                          1):
