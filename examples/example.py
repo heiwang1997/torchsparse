@@ -8,11 +8,11 @@ import torch.utils.data
 from torch import nn
 from torch.cuda import amp
 
-import torchsparse
-from torchsparse import SparseTensor
-from torchsparse import nn as spnn
-from torchsparse.utils.collate import sparse_collate_fn
-from torchsparse.utils.quantize import sparse_quantize
+import torchsparse_20
+from torchsparse_20 import SparseTensor
+from torchsparse_20 import nn as spnn
+from torchsparse_20.utils.collate import sparse_collate_fn
+from torchsparse_20.utils.quantize import sparse_quantize
 
 
 class RandomDataset:
@@ -98,9 +98,9 @@ if __name__ == '__main__':
     # enable torchsparse 2.0 inference
     model.eval()
     # enable fused and locality-aware memory access optimization
-    torchsparse.backends.benchmark = True  # type: ignore
+    torchsparse_20.backends.benchmark = True  # type: ignore
     # enable adaptive grouping optimization
-    torchsparse.tune(
+    torchsparse_20.tune(
         model=model,
         data_loader=dataflow,
         n_samples=10,

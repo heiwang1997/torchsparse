@@ -2,9 +2,9 @@ import numpy as np
 import torch
 from torch import nn
 
-from torchsparse import SparseTensor
-from torchsparse.backbones import SparseResNet21D, SparseResUNet42
-from torchsparse.utils.quantize import sparse_quantize
+from torchsparse_20 import SparseTensor
+from torchsparse_20.backbones import SparseResNet21D, SparseResUNet42
+from torchsparse_20.utils.quantize import sparse_quantize
 
 
 @torch.no_grad()
