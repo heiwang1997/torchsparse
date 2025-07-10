@@ -1,6 +1,6 @@
 import torch
 from torch.autograd import Function
-from torch.cuda.amp import custom_bwd, custom_fwd
+from torch.amp import custom_bwd, custom_fwd
 
 import torchsparse_20.backend
 
@@ -51,7 +51,7 @@ def calc_ti_weights(coords: torch.Tensor,
 class DevoxelizeFunction(Function):
 
     @staticmethod
-    @custom_fwd(cast_inputs=torch.half)
+    @custom_fwd(cast_inputs=torch.half, device_type='cuda')
     def forward(ctx, feats: torch.Tensor, coords: torch.Tensor,
                 weights: torch.Tensor) -> torch.Tensor:
         feats = feats.contiguous()
@@ -73,7 +73,7 @@ class DevoxelizeFunction(Function):
         return output
 
     @staticmethod
-    @custom_bwd
+    @custom_bwd(device_type='cuda')
     def backward(ctx, grad_output: torch.Tensor):
         coords, weights, input_size = ctx.for_backwards
         grad_output = grad_output.contiguous()
